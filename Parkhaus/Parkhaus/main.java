@@ -1,4 +1,4 @@
-package Parkhaus; //Author: Murad Kazbekov
+package parkdeckmuradkazbekov;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,6 +51,15 @@ class Garage {
         return occupiedSpots.get(vehicleId);
     }
 
+    public void leaveGarage(String vehicleId) {
+        ParkingSpot parkedSpot = occupiedSpots.remove(vehicleId);
+        if (parkedSpot != null) {
+            System.out.println("car with the numberplate " + vehicleId + " left from: " + parkedSpot);
+        } else {
+            System.out.println("car with the numberplate " + vehicleId + " not found in the garage.");
+        }
+    }
+
     public int getFreeParkingSpaces() {
         return numberOfFloors * parkingSpacesPerFloor - occupiedSpots.size();
     }
@@ -90,7 +99,8 @@ public class main {
         // Anzahl an etagen, Anzahl an plätzen
         Garage garage = new Garage(3, 25);
 
-        Vehicle car = new Vehicle("Con360");
+        Vehicle car = new Vehicle("BB23");
+        Vehicle car = new Vehicle("BB22");
         Vehicle motorcycle = new Vehicle("Sulting360");
 
         ParkingSpot carSpot = garage.parkVehicle(car);
@@ -103,5 +113,8 @@ public class main {
         System.out.println("Car is at: " + foundCarSpot);
 
         System.out.println("Free parking spaces: " + garage.getFreeParkingSpaces());
+
+        garage.leaveGarage(car.getId());
+        System.out.println("Free parking spaces after car leaves: " + garage.getFreeParkingSpaces());
     }
 }
